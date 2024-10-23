@@ -57,7 +57,7 @@ dependencies {
     annotationProcessor("androidx.room:room-compiler:$room_version")
 
     // Optional - RxJavaやLiveDataを使う場合
-    implementation("androidx.room:room-rxjava2:$room_version")
-    implementation("androidx.room:room-livedata:$room_version")
+//    implementation("androidx.room:room-rxjava2:$room_version")
+//    implementation("androidx.room:room-livedata:$room_version")
 
 }

@@ -6,97 +6,100 @@
     android:layout_height="match_parent"
     tools:context=".ui.notifications.NotificationsFragment">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:id="@+id/medicationmain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
-
-    <TextView
-        android:id="@+id/text_notifications"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="0sp"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.994" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/medication_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:hint="薬の名前" />
+        <!--    <TextView-->
+        <!--        android:id="@+id/text_notifications"-->
+        <!--        android:layout_width="match_parent"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_marginStart="8dp"-->
+        <!--        android:layout_marginTop="8dp"-->
+        <!--        android:layout_marginEnd="8dp"-->
+        <!--        android:textAlignment="center"-->
+        <!--        android:textSize="0sp"-->
+        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--        app:layout_constraintHorizontal_bias="0.0"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintTop_toTopOf="parent"-->
+        <!--        app:layout_constraintVertical_bias="0.994" />-->
 
-    <EditText
-        android:id="@+id/medication_dosage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:textSize="20sp"
-        android:hint="1回あたりの服用量"
-        />
-
-    <EditText
-        android:id="@+id/medication_frequency"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:textSize="20sp"
-        android:hint="1日の服用回数"/>
-
-    <EditText
-        android:id="@+id/medication_startdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:hint="服用開始日を選択"
-        android:focusable="false"
-        android:clickable="true"/>
-
-    <EditText
-        android:id="@+id/medication_enddate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="服用終了日を選択"
-        android:textSize="20sp"
-        android:focusable="false"
-        android:clickable="true"/>
-
-    <Switch
-        android:id="@+id/medication_reminder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:hint="リマインダー"/>
-
-
-    <Button
-        android:id="@+id/medication_save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="保存" />
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <TextView
-            android:id="@+id/medication_list"
+        <EditText
+            android:id="@+id/medication_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp" />
-    </ScrollView>
+            android:hint="薬の名前"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/medication_dosage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="1回あたりの服用量"
+            android:inputType="number"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/medication_frequency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="1日の服用回数"
+            android:inputType="number"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/medication_startdate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="服用開始日を選択"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/medication_enddate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="false"
+            android:hint="服用終了日を選択"
+            android:textSize="20sp" />
+
+        <Switch
+            android:id="@+id/medication_reminder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="リマインダー"
+            android:textSize="20sp" />
+
+
+        <Button
+            android:id="@+id/medication_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="保存" />
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/medication_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="16dp" />
+        </ScrollView>
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
