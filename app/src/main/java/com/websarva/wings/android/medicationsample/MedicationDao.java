@@ -16,4 +16,8 @@ import java.util.List;
         @Query("SELECT * FROM Medication")
         List<Medication> getAllMedications();
 
+        // 作成日の降順で薬を取得
+        @Query("SELECT * FROM Medication ORDER BY createdAt DESC")
+        List<Medication> getAllMedicationsByCreationDate();
+
     }
