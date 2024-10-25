@@ -3,7 +3,10 @@ package com.websarva.wings.android.medicationsample.ui.notifications;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +18,7 @@ import android.view.ViewGroup;
 import com.websarva.wings.android.medicationsample.AppDatabase;
 import com.websarva.wings.android.medicationsample.Medication;
 import com.websarva.wings.android.medicationsample.MedicationDao;
+import com.websarva.wings.android.medicationsample.MedicationViewModel;
 import com.websarva.wings.android.medicationsample.R;
 import com.websarva.wings.android.medicationsample.ui.notifications.placeholder.PlaceholderContent;
 
@@ -48,8 +52,7 @@ public class MedicationListFragment extends Fragment {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
 
-        db = AppDatabase.getDatabase(requireContext());
-        medicationDao = db.medicationDao();
+
     }
 
     @Override
@@ -59,16 +62,22 @@ public class MedicationListFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // データベースからデータを取得し、アダプターに設定
-        // データベースからすべての薬情報を取得（バックグラウンドスレッド）
-        new Thread(() -> {
-            List<Medication> medications = medicationDao.getAllMedications();
+        // Database インスタンスを取得し、ViewModel を設定
+        db = AppDatabase.getDatabase(requireContext());
+        medicationDao = db.medicationDao();
+        MedicationViewModel viewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
+            @NonNull
+            @Override
+            public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+                return (T) new MedicationViewModel(medicationDao);
+            }
+        }).get(MedicationViewModel.class);
 
-
-        }).start();
-        List<Medication> medicationList = medicationDao.getAllMedicationsByCreationDate();
-        adapter = new MedicationAdapter(medicationList);
-        recyclerView.setAdapter(adapter);
+        // LiveData を観察してデータが変わったらアダプターにセット
+        viewModel.getMedicationList().observe(getViewLifecycleOwner(), medicationList -> {
+            adapter = new MedicationAdapter(medicationList);
+            recyclerView.setAdapter(adapter);
+        });
 
         return view;
     }
