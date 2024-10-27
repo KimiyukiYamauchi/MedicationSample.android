@@ -27,7 +27,7 @@
         android:id="@+id/navigation_notifications"
         android:name="com.websarva.wings.android.medicationsample.ui.notifications.MedicationListFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_medication_list_list">
+        tools:layout="@layout/fragment_medication_list">
 
         <!-- MedicationListFragment から NotificationsFragment へのアクションを追加 -->
         <action

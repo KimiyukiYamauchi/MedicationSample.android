@@ -1,6 +1,5 @@
 package com.websarva.wings.android.medicationsample.ui.notifications;
 
-import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,23 +8,17 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.websarva.wings.android.medicationsample.AppDatabase;
-import com.websarva.wings.android.medicationsample.Medication;
 import com.websarva.wings.android.medicationsample.MedicationDao;
 import com.websarva.wings.android.medicationsample.MedicationViewModel;
 import com.websarva.wings.android.medicationsample.R;
-import com.websarva.wings.android.medicationsample.ui.notifications.placeholder.PlaceholderContent;
-
-import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -61,7 +54,7 @@ public class MedicationListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_medication_list_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_medication_list, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -84,7 +77,7 @@ public class MedicationListFragment extends Fragment {
 
         // ボタンクリックで画面遷移
         view.findViewById(R.id.button_to_notifications).setOnClickListener(v -> {
-            Log.d("MedicationListFragment", "Button clicked");
+//            Log.d("MedicationListFragment", "Button clicked");
             NavController navController = Navigation.findNavController(view);
             navController.navigate(R.id.action_medicationListFragment_to_notificationsFragment);
         });
