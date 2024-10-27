@@ -18,8 +18,20 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
+        android:id="@+id/navigation_notifications2"
+        android:name="com.websarva.wings.android.medicationsample.ui.notifications.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+
+    <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.websarva.wings.android.medicationsample.ui.notifications.MedicationListFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_medication_list_list" />
+        tools:layout="@layout/fragment_medication_list_list">
+
+        <!-- MedicationListFragment から NotificationsFragment へのアクションを追加 -->
+        <action
+            android:id="@+id/action_medicationListFragment_to_notificationsFragment"
+            app:destination="@id/navigation_notifications2" />
+    </fragment>
 </navigation>

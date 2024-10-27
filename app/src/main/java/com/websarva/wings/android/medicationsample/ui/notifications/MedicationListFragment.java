@@ -7,10 +7,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,6 +80,13 @@ public class MedicationListFragment extends Fragment {
         viewModel.getMedicationList().observe(getViewLifecycleOwner(), medicationList -> {
             adapter = new MedicationAdapter(medicationList);
             recyclerView.setAdapter(adapter);
+        });
+
+        // ボタンクリックで画面遷移
+        view.findViewById(R.id.button_to_notifications).setOnClickListener(v -> {
+            Log.d("MedicationListFragment", "Button clicked");
+            NavController navController = Navigation.findNavController(view);
+            navController.navigate(R.id.action_medicationListFragment_to_notificationsFragment);
         });
 
         return view;
