@@ -23,9 +23,20 @@ public class Medication {
     @ColumnInfo(defaultValue = "CURRENT_TIMESTAMP")
     public long createdAt;     // 登録日時（Unixタイムスタンプ）
 
+    // デフォルトのコンストラクタで現在のタイムスタンプを設定
+    public Medication() {
+        this.name = "";
+        this.dosage = 0;
+        this.frequency = 0;
+        this.startdate = 0;
+        this.enddate = 0;
+        this.reminder = false;
+        this.createdAt = System.currentTimeMillis(); // 現在のタイムスタンプを設定
+    }
+
     // 日付をフォーマットして返すメソッド
     public String getFormattedCreationDate() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault());
         return sdf.format(new Date(createdAt));
     }
 }
