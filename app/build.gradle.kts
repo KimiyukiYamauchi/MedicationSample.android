@@ -1,5 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
+//    id("org.jetbrains.kotlin.android")
+//    id("kotlin-kapt") // これを追加
 }
 
 android {
@@ -58,8 +60,11 @@ dependencies {
     implementation("androidx.room:room-runtime:$room_version")
     annotationProcessor("androidx.room:room-compiler:$room_version")
 
-    // Optional - RxJavaやLiveDataを使う場合
-//    implementation("androidx.room:room-rxjava2:$room_version")
-//    implementation("androidx.room:room-livedata:$room_version")
+    // ViewModelとLiveData
+//    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+//    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
 }

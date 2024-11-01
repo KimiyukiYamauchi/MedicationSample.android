@@ -8,17 +8,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.websarva.wings.android.medicationsample.AppDatabase;
 import com.websarva.wings.android.medicationsample.HealthCare;
 import com.websarva.wings.android.medicationsample.HealthCareDao;
 import com.websarva.wings.android.medicationsample.Medication;
 import com.websarva.wings.android.medicationsample.MedicationDao;
+import com.websarva.wings.android.medicationsample.MedicationViewModel;
 import com.websarva.wings.android.medicationsample.R;
 import com.websarva.wings.android.medicationsample.databinding.FragmentNotificationsBinding;
 
@@ -28,6 +33,9 @@ public class NotificationsFragment extends Fragment {
 
     private AppDatabase db;
     private MedicationDao medicationDao;
+    private NavController navController;
+
+
     private FragmentNotificationsBinding binding;
 
     private EditText medicationNameInput;
@@ -55,20 +63,15 @@ public class NotificationsFragment extends Fragment {
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-//        final TextView textView = binding.textNotifications;
-//        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
-        // データの取得
-//        List<Medication> medicationList = medicationDao.getAllMedications();
-        // ここでデータを表示する処理を行う
-        displayMedications();
-
         return root;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // NavControllerの取得
+        navController = Navigation.findNavController(view);
 
         // MedicationのUI要素の取得
         medicationNameInput = view.findViewById(R.id.medication_name);
@@ -130,9 +133,12 @@ public class NotificationsFragment extends Fragment {
         // データベースに薬情報を挿入（バックグラウンドスレッドで処理）
         new Thread(() -> {
             medicationDao.insertMedication(medication);
-//            runOnUiThread(this::displayMedications);  // メインスレッドでリストを更新
             if (getActivity() != null) {
-                getActivity().runOnUiThread(this::displayMedications);
+                getActivity().runOnUiThread(() -> {
+//                    displayMedications();
+                    // 成功時にナビゲーションを実行
+                    navController.navigate(R.id.navigation_notifications);
+                });
             }
         }).start();
 
@@ -159,5 +165,7 @@ public class NotificationsFragment extends Fragment {
             }
 
         }).start();
+
+//        navController.navigate(R.id.navigation_notifications);
     }
 }

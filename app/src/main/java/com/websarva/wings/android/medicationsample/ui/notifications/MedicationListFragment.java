@@ -28,7 +28,6 @@ public class MedicationListFragment extends Fragment {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 1;
     private AppDatabase db;
     private MedicationDao medicationDao; // データベースアクセス用
     private MedicationAdapter adapter;
@@ -43,11 +42,6 @@ public class MedicationListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
-
 
     }
 
@@ -77,11 +71,13 @@ public class MedicationListFragment extends Fragment {
 
         // ボタンクリックで画面遷移
         view.findViewById(R.id.button_to_notifications).setOnClickListener(v -> {
-//            Log.d("MedicationListFragment", "Button clicked");
             NavController navController = Navigation.findNavController(view);
             navController.navigate(R.id.action_medicationListFragment_to_notificationsFragment);
         });
 
         return view;
     }
+
+
+
 }
