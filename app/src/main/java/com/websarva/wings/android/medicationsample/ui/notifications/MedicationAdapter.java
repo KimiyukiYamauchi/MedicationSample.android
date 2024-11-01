@@ -45,7 +45,7 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         holder.medicationDate.setText(medication.getFormattedCreationDate());
 
         holder.deleteButton.setOnClickListener(
-                v -> showDeleteConfirmationDialog(medication, holder.getAdapterPosition())
+                v -> showDeleteConfirmationDialog(medication, position)
         );
     }
 
