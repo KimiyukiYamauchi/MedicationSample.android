@@ -5,7 +5,7 @@
     android:id="@+id/addMedication"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.notifications.NotificationsFragment">
+    tools:context=".ui.notifications.AddMedicationFragment">
 
     <LinearLayout
         android:id="@+id/medicationmain"

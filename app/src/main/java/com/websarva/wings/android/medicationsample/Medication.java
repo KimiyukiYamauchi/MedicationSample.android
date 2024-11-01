@@ -25,9 +25,9 @@ public class Medication {
 
     // デフォルトのコンストラクタで現在のタイムスタンプを設定
     public Medication() {
-        this.name = "";
-        this.dosage = 0;
-        this.frequency = 0;
+        this.name = "名前未設定";
+        this.dosage = 1;
+        this.frequency = 1;
         this.startdate = 0;
         this.enddate = 0;
         this.reminder = false;

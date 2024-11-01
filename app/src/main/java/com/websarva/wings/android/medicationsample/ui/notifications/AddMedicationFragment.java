@@ -8,28 +8,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.websarva.wings.android.medicationsample.AppDatabase;
-import com.websarva.wings.android.medicationsample.HealthCare;
-import com.websarva.wings.android.medicationsample.HealthCareDao;
 import com.websarva.wings.android.medicationsample.Medication;
 import com.websarva.wings.android.medicationsample.MedicationDao;
-import com.websarva.wings.android.medicationsample.MedicationViewModel;
 import com.websarva.wings.android.medicationsample.R;
 import com.websarva.wings.android.medicationsample.databinding.FragmentNotificationsBinding;
 
 import java.util.List;
 
-public class NotificationsFragment extends Fragment {
+public class AddMedicationFragment extends Fragment {
 
     private AppDatabase db;
     private MedicationDao medicationDao;
@@ -109,8 +104,23 @@ public class NotificationsFragment extends Fragment {
     private void saveMedication() {
         // 名前、服用量、服用回数,服用開始日と終了日の入力値を取得
         String name = medicationNameInput.getText().toString();
-        int dosage = Integer.parseInt(medicationDosageInput.getText().toString());
-        int frequency = Integer.parseInt(medicationFrequencyInput.getText().toString());
+        if (name.isEmpty()) {
+            name = "名前未設定";
+        }
+        int dosage;
+        String strdosage = medicationDosageInput.getText().toString();
+        if (strdosage.isEmpty()) {
+            dosage = 1;
+        } else {
+            dosage = Integer.parseInt(strdosage);
+        }
+        int frequency;
+        String strfrequency = medicationFrequencyInput.getText().toString();
+        if (strfrequency.isEmpty()) {
+            frequency = 1;
+        } else {
+            frequency = Integer.parseInt(strfrequency);
+        }
         String startDateStr = medicationStartDateInput.getText().toString();
         String endDateStr = medicationEndDateInput.getText().toString();
 
@@ -123,6 +133,7 @@ public class NotificationsFragment extends Fragment {
 
         // Medication オブジェクトを作成して保存
         Medication medication = new Medication();
+
         medication.name = name;
         medication.dosage = dosage;
         medication.frequency = frequency;
