@@ -3,6 +3,7 @@ package com.websarva.wings.android.medicationsample.ui.notifications;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -30,6 +31,8 @@ public class MedicationListFragment extends Fragment {
     // TODO: Customize parameters
     private AppDatabase db;
     private MedicationDao medicationDao; // データベースアクセス用
+    MedicationViewModel viewModel;
+    RecyclerView recyclerView;
     private MedicationAdapter adapter;
 
     /**
@@ -43,25 +46,32 @@ public class MedicationListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_medication_list, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         // Database インスタンスを取得し、ViewModel を設定
         db = AppDatabase.getDatabase(requireContext());
         medicationDao = db.medicationDao();
-        MedicationViewModel viewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
+        viewModel = new ViewModelProvider(this, new ViewModelProvider.Factory() {
             @NonNull
             @Override
             public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
                 return (T) new MedicationViewModel(medicationDao);
             }
         }).get(MedicationViewModel.class);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_medication_list, container, false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // LiveData を観察してデータが変わったらアダプターにセット
         viewModel.getMedicationList().observe(getViewLifecycleOwner(), medicationList -> {
@@ -74,10 +84,5 @@ public class MedicationListFragment extends Fragment {
             NavController navController = Navigation.findNavController(view);
             navController.navigate(R.id.action_medicationListFragment_to_notificationsFragment);
         });
-
-        return view;
     }
-
-
-
 }
