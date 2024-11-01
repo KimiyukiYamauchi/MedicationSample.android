@@ -1,22 +1,33 @@
 package com.websarva.wings.android.medicationsample.ui.notifications;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.websarva.wings.android.medicationsample.Medication;
+import com.websarva.wings.android.medicationsample.MedicationDao;
 import com.websarva.wings.android.medicationsample.R;
 
 import java.util.List;
 
 public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.MedicationViewHolder> {
     private List<Medication> medicationList;
+    private final MedicationDao medicationDao;
+    private final Context context;
 
-    public MedicationAdapter(List<Medication> medicationList) {
+    public MedicationAdapter(List<Medication> medicationList, MedicationDao medicationDao, Context context) {
         this.medicationList = medicationList;
+        this.medicationDao = medicationDao;
+        this.context = context;
     }
 
     @NonNull
@@ -32,6 +43,10 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         Medication medication = medicationList.get(position);
         holder.medicationName.setText(medication.name);
         holder.medicationDate.setText(medication.getFormattedCreationDate());
+
+        holder.deleteButton.setOnClickListener(
+                v -> showDeleteConfirmationDialog(medication, holder.getAdapterPosition())
+        );
     }
 
     @Override
@@ -39,13 +54,35 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         return medicationList.size();
     }
 
+    private void showDeleteConfirmationDialog(Medication medication, int position) {
+        new AlertDialog.Builder(context)
+                .setTitle("削除確認")
+                .setMessage("このデータを削除してもよろしいですか？")
+                .setPositiveButton("OK", (dialog, which) -> deleteMedication(medication, position))
+                .setNegativeButton("キャンセル", null)
+                .show();
+    }
+
+    private void deleteMedication(Medication medication, int position) {
+        new Thread(() -> {
+            medicationDao.deleteMedication(medication);
+            ((FragmentActivity) context).runOnUiThread(() -> {
+                medicationList.remove(position);
+                notifyItemRemoved(position);
+                Toast.makeText(context, "データが削除されました", Toast.LENGTH_SHORT).show();
+            });
+        }).start();
+    }
+
     static class MedicationViewHolder extends RecyclerView.ViewHolder {
         TextView medicationName, medicationDate;
+        Button deleteButton;
 
         public MedicationViewHolder(@NonNull View itemView) {
             super(itemView);
             medicationName = itemView.findViewById(R.id.medication_name);
             medicationDate = itemView.findViewById(R.id.medication_date);
+            deleteButton = itemView.findViewById(R.id.delete_button);
         }
     }
 }

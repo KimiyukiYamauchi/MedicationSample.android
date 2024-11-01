@@ -75,7 +75,7 @@ public class MedicationListFragment extends Fragment {
 
         // LiveData を観察してデータが変わったらアダプターにセット
         viewModel.getMedicationList().observe(getViewLifecycleOwner(), medicationList -> {
-            adapter = new MedicationAdapter(medicationList);
+            adapter = new MedicationAdapter(medicationList, medicationDao, requireContext());
             recyclerView.setAdapter(adapter);
         });
 
