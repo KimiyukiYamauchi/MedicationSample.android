@@ -18,10 +18,22 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications2"
+        android:id="@+id/navigation_addmedication"
         android:name="com.websarva.wings.android.medicationsample.ui.notifications.AddMedicationFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
+    <!-- EditMedicationFragment を新規追加 -->
+    <fragment
+        android:id="@+id/navigation_editmedication"
+        android:name="com.websarva.wings.android.medicationsample.ui.notifications.EditMedicationFragment"
+        android:label="お薬一覧(編集)"
+        tools:layout="@layout/fragment_edit_medication">
+        <!-- 薬のIDを渡すための引数を定義 -->
+        <argument
+            android:name="medicationId"
+            app:argType="integer" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -32,6 +44,11 @@
         <!-- MedicationListFragment から AddMedicationFragment へのアクションを追加 -->
         <action
             android:id="@+id/action_medicationListFragment_to_notificationsFragment"
-            app:destination="@id/navigation_notifications2" />
+            app:destination="@id/navigation_addmedication" />
+
+        <!-- MedicationListFragment から EditMedicationFragment へのアクション -->
+        <action
+            android:id="@+id/action_medicationListFragment_to_editMedicationFragment"
+            app:destination="@id/navigation_editmedication" />
     </fragment>
 </navigation>

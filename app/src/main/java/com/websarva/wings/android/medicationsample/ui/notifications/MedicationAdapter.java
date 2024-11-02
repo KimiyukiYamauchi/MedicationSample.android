@@ -1,6 +1,7 @@
 package com.websarva.wings.android.medicationsample.ui.notifications;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.websarva.wings.android.medicationsample.Medication;
@@ -44,9 +46,18 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
         holder.medicationName.setText(medication.name);
         holder.medicationDate.setText(medication.getFormattedCreationDate());
 
+        // 削除ボタンのクリックリスナー
         holder.deleteButton.setOnClickListener(
                 v -> showDeleteConfirmationDialog(medication, position)
         );
+
+        // 編集ボタンのクリックリスナー
+        holder.editButton.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("medicationId", medication.id);  // IDを渡す
+            Navigation.findNavController(v)
+                    .navigate(R.id.action_medicationListFragment_to_editMedicationFragment, bundle);
+        });
     }
 
     @Override
@@ -76,13 +87,14 @@ public class MedicationAdapter extends RecyclerView.Adapter<MedicationAdapter.Me
 
     static class MedicationViewHolder extends RecyclerView.ViewHolder {
         TextView medicationName, medicationDate;
-        Button deleteButton;
+        Button deleteButton, editButton;
 
         public MedicationViewHolder(@NonNull View itemView) {
             super(itemView);
             medicationName = itemView.findViewById(R.id.medication_name);
             medicationDate = itemView.findViewById(R.id.medication_date);
             deleteButton = itemView.findViewById(R.id.delete_button);
+            editButton = itemView.findViewById(R.id.edit_button);
         }
     }
 }

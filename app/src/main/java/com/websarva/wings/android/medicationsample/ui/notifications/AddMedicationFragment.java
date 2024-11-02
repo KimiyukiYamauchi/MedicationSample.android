@@ -1,6 +1,7 @@
 package com.websarva.wings.android.medicationsample.ui.notifications;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +90,10 @@ public class AddMedicationFragment extends Fragment {
 //        medicationEndDateInput.setOnClickListener(v -> showDatePickerDialog(medicationEndDateInput));
 
         // 薬の保存ボタンのクリックリスナー
-        saveButton.setOnClickListener(v -> saveMedication());
+        saveButton.setOnClickListener(v -> {
+            Log.d("EditMedicationFragment", "AddMedicationFragment saveButton.setOnClickListener");
+            saveMedication();
+        });
 
         // 保存された薬のリストを表示
         displayMedications();
