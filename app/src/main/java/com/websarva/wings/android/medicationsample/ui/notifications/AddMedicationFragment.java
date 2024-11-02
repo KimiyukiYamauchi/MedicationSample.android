@@ -148,16 +148,16 @@ public class AddMedicationFragment extends Fragment {
         // データベースに薬情報を挿入（バックグラウンドスレッドで処理）
         new Thread(() -> {
             medicationDao.insertMedication(medication);
-            if (getActivity() != null) {
-                getActivity().runOnUiThread(() -> {
-//                    displayMedications();
-                    // 成功時にナビゲーションを実行
-                    navController.navigate(R.id.navigation_notifications);
-                });
-            }
+//            if (getActivity() != null) {
+//                getActivity().runOnUiThread(() -> {
+////                    displayMedications();
+//                    // 成功時にナビゲーションを実行
+//                    navController.navigate(R.id.navigation_notifications);
+//                });
+//            }
         }).start();
 
-
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 
     private void displayMedications() {         //薬のデータを取得し画面に表示
